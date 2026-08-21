@@ -5,7 +5,7 @@
 # Configuration lives in $DSH_HOME/settings.yaml under `advisor:` (token,
 # route), which overrides the composition `config` below.
 - insert:
-    - id: dsh-advisor
-      name: 'dsh-advisor'
+    - id: dsh-consult
+      name: 'dsh-consult'
       config:
         httpEnabled: true

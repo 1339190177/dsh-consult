@@ -1,4 +1,4 @@
-# dsh-advisor（本地插件）
+# dsh-consult
 
 跨供应商第二意见服务：dsh 自身 agent 获得跨供应商咨询工具，外部 harness
 （ZCode 等）获得轻量本地 OpenAI 兼容顾问 API。对应需求文档
