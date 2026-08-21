@@ -13,7 +13,19 @@
 | F3 | `consult` 工具 | 注册给所有 agent；默认自动路由到与当前模型**异源**的供应商（优先用户在 `llm-pi-ai` settings 里配置过凭证的网关，如 XQAPI），可显式传 `model="provider/model"`；绝不静默换模型——无解时显式报错并列出可用 provider |
 | F4 | 结构化输出 | consult 默认要求 JSON `{recommendation, reasons, confidence, risks, alternatives}`（宽松解析，失败降级纯文本并标注）；HTTP 端点支持 `response_format: json_schema / json_object`（提示级约束 + 解析） |
 | F5 | 上游溯源 | HTTP 响应头 `x-model-upstream: provider/model`；consult 返回 `backend: dsh-advisor(model@provider)`。注意：中转商自报身份不可验证的部分与需求 G3 相同，此为网关侧尽力而为 |
-| F6 | 咨询审计 | `$DSH_HOME/storages/advisor/audit.jsonl`：时间 / 来源(tool\|http) / sessionId / 问题摘要 / 路由 / 耗时 / 是否结构化；`adopted` 字段留待回填 |
+| F6 | 咨询审计 | `$DSH_HOME/storages/advisor/audit.jsonl`：时间 / 来源(tool\|http) / sessionId / 问题摘要 / 路由 / 思维等级 / 耗时 / 是否结构化；`adopted` 字段留待回填 |
+| F9 | 思维等级（reasoning effort） | consult 参数 `reasoning` / HTTP 字段 `reasoning_effort` / settings `advisor.reasoningEffort`，词表 `off/minimal/low/medium/high/xhigh/max`；逐模型校验（resolveModelInfo），不支持时显式报错列出支持项；**默认不传 = provider 默认（自适应思考）** |
+
+## 思维等级：默认为什么不是 max（实测依据）
+
+- **等级是「上限」不是「下限」**：混合思考模型（deepseek-v4-flash 等）按问题难度自适应思考，
+  实测一句话问题上 `max` 与 `high` 推理量无差别；`off` 才是确定性开关（官方路由 0 推理、896ms）
+- **延迟**：官方路由 off≈0.9s，思考态 1.2~5s（波动来自问题难度，不是等级档位）
+- **中转盲区（G3 又一实证）**：XQAPI 中转**不透传** effort 参数（off 请求仍返回 195~421 字符推理，
+  与等级完全不相关）——经 `deepseek`（XQAPI）路由时设置等级是无效 placebo；
+  `deepseek-official` 路由才保证生效。想让等级真正生效可配 `advisor.route: deepseek-official/deepseek-v4-flash`
+- 结论：**缺省不传**（provider 默认，官方 flash 默认即 high 且自适应）；难题在 consult 时
+  显式传 `reasoning: high/max`；要全局固定用 settings `advisor.reasoningEffort`
 
 ## 安装
 
