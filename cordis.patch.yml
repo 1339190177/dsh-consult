@@ -1,0 +1,11 @@
+# dsh-advisor (local): cross-provider second opinions for dsh agents and an
+# OpenAI-compatible advisor endpoint for external harnesses.
+#
+# Mounted by adding this package to the profile's dsh.profile.bundles list.
+# Configuration lives in $DSH_HOME/settings.yaml under `advisor:` (token,
+# route), which overrides the composition `config` below.
+- insert:
+    - id: dsh-advisor
+      name: '@linxin666/dsh-advisor-local'
+      config:
+        httpEnabled: true
