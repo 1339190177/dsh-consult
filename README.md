@@ -15,9 +15,9 @@
 | F5 | 上游溯源 | HTTP 响应头 `x-model-upstream: provider/model`；consult 返回 `backend: dsh-advisor(model@provider)`。注意：中转商自报身份不可验证的部分与需求 G3 相同，此为网关侧尽力而为 |
 | F6 | 咨询审计 | `$DSH_HOME/storages/advisor/audit.jsonl`：时间 / 来源(tool\|http) / sessionId / 问题摘要 / 路由 / 耗时 / 是否结构化；`adopted` 字段留待回填 |
 
-## 安装（已完成）
+## 安装
 
-- 插件目录：`~/.dsh/local-plugins/dsh-advisor/`（本包）
+- 克隆本仓库到插件目录：`git clone <本仓库地址> ~/.dsh/local-plugins/dsh-advisor`
 - `~/.dsh/profiles/web/package.json` 与 `~/.dsh/profiles/headless/package.json`：
   `dependencies` 加 `link:` 依赖 + `dsh.profile.bundles` 加 `@linxin666/dsh-advisor-local`
 - 两个 profile 目录各跑一次 `pnpm install`（link 包的依赖装在插件目录自身）
