@@ -6,6 +6,6 @@
 # route), which overrides the composition `config` below.
 - insert:
     - id: dsh-advisor
-      name: '@linxin666/dsh-advisor-local'
+      name: 'dsh-advisor'
       config:
         httpEnabled: true

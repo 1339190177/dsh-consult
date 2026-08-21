@@ -19,7 +19,7 @@
 
 - 克隆本仓库到插件目录：`git clone <本仓库地址> ~/.dsh/local-plugins/dsh-advisor`
 - `~/.dsh/profiles/web/package.json` 与 `~/.dsh/profiles/headless/package.json`：
-  `dependencies` 加 `link:` 依赖 + `dsh.profile.bundles` 加 `@linxin666/dsh-advisor-local`
+  `dependencies` 加 `link:` 依赖 + `dsh.profile.bundles` 加 `dsh-advisor`
 - 两个 profile 目录各跑一次 `pnpm install`（link 包的依赖装在插件目录自身）
 - headless 的 `cordis.patch.yml` 含 F1 的 `!!js` 条目
 
@@ -32,7 +32,7 @@ headless 每次运行都是新进程，即时生效。
 
 ```yaml
 - id: dsh-advisor
-  name: '@linxin666/dsh-advisor-local'
+  name: 'dsh-advisor'
   config:
     httpEnabled: true   # false 可关掉 HTTP 端点（consult 工具不受影响）
 ```
