@@ -1,8 +1,27 @@
 # dsh-consult
 
 跨供应商第二意见服务：dsh 自身 agent 获得跨供应商咨询工具，外部 harness
-（ZCode 等）获得轻量本地 OpenAI 兼容顾问 API。对应需求文档
-`dsh-advisor-plugin-需求.md` 的路径 B 产品化。
+（ZCode 等）获得轻量本地 OpenAI 兼容顾问 API。
+
+## v2 现状（2.4.1，简约重构后）
+
+设计原则：**默认官方、单次调用、唯一权威超时、可视化配置**。
+
+- **默认路由 = 官方 DeepSeek**（`deepseek-official/deepseek-v4-flash`）；想换供应商在
+  dsh web 设置页「顾问 / 第二意见」面板选（供应商→模型→推理档位三级联动，档位词表
+  来自所选模型的实际支持列表），或 settings.yaml `advisor.route`，或请求显式带 `model`
+- **model 参数全线可选**：端点/工具/消费端缺省即默认路由
+- **多模态**：端点接受 `image_url`（data URL，png/jpeg/webp/gif，**可多张**）；
+  图片走官方视觉直连，默认路由自动升级视觉模型（显式指定的模型不偷换，直接报错）；
+  `bash ask_advisor.sh "问题" "上下文" 图1.png 图2.png`
+- **唯一权威超时**：服务端模型调用 30 分钟（`DSH_CONSULT_TIMEOUT_MS` 可调，超时回 504），
+  客户端单次调用收下它——无重试梯子
+- **scout 调查模式**：官方 + 实时 web_search（8 轮），用于你与人类用户都无法解决的问题
+- **审计**：每次咨询一行 JSONL（含图片数量、实际路由、耗时）
+- **安全边界**：仅回环 + Bearer + POST；配置 API 加 Origin 同源校验
+
+> 下表 F1–F9 是 v1 时代的功能史料；其中 F3 的"自动异源路由"与"思维等级中转盲区"
+> 段落描述的 XQAPI 默认路由已在 v2 移除（默认即官方，等级透传有保障）。
 
 ## 能力（对照需求 F1–F6）
 
