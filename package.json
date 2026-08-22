@@ -1,7 +1,7 @@
 {
   "name": "dsh-consult",
   "description": "Local dsh advisor plugin: cross-provider second opinions. Registers the `consult` model tool (F3/F4), an OpenAI-compatible POST /v1/chat/completions endpoint on the existing web port (F2, Bearer token from settings.yaml), DSH_MODEL=provider/model main-agent rerouting via the agent/request waterfall (F1), upstream route reporting (F5) and a JSONL audit trail (F6). v1.1: scout mode — search-enabled investigative advisor (DeepSeek official + native web_search) for problems neither the agent nor the human can solve.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
