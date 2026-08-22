@@ -1,7 +1,7 @@
 {
   "name": "dsh-consult",
   "description": "Cross-provider second-opinion advisor for dsh. v2 (simple-extensible-configurable-stable): DEFAULT ROUTE = official DeepSeek (deepseek-official/deepseek-v4-flash); model param optional everywhere; one-page visual settings panel; honest audit trail. Scout mode = official + live web_search. OpenAI-compatible endpoint + consult tool + DSH_MODEL rerouting.",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
